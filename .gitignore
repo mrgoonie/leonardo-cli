@@ -1,0 +1,10 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+bun.lockb
+leonardo.config.json
+!leonardo.config.example.json

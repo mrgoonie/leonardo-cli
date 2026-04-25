@@ -1,0 +1,11 @@
+{
+  "apiKey": "your-leonardo-api-key",
+  "baseUrl": "https://cloud.leonardo.ai/api/rest/v1",
+  "outputDir": "./outputs",
+  "defaults": {
+    "modelId": "6b645e3a-d64f-4341-a6d8-7a3690fbf042",
+    "width": 1024,
+    "height": 1024,
+    "numImages": 1
+  }
+}
