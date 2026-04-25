@@ -10,6 +10,7 @@ import { registerVideoModels } from "./commands/video-models.ts";
 import { registerConfig } from "./commands/config.ts";
 import { LeonardoApiError } from "./api/client.ts";
 import { log } from "./utils/log.ts";
+import pkg from "../package.json" with { type: "json" };
 
 const program = new Command();
 
@@ -19,7 +20,7 @@ program
     "Leonardo.Ai CLI — generate images, videos, upscale, and more.\n" +
       "AI-agent friendly (--json) and human friendly (colors + progress).",
   )
-  .version("0.1.0")
+  .version(pkg.version)
   .option("-k, --api-key <key>", "Leonardo API key (overrides env/config)")
   .option("--base-url <url>", "Leonardo API base URL")
   .option("--json", "Emit machine-readable JSON to stdout (agent mode)", false)
