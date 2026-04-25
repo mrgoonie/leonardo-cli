@@ -1,6 +1,6 @@
 {
   "name": "leonardo-cli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Leonardo.Ai CLI — generate images, videos, and more from your terminal. AI-agent and human friendly.",
   "type": "module",
   "bin": {
@@ -8,7 +8,11 @@
     "leo": "./dist/cli.js"
   },
   "main": "./dist/cli.js",
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "leonardo": "bun src/cli.ts",
     "dev": "bun src/cli.ts",
@@ -16,7 +20,14 @@
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "bun run build"
   },
-  "keywords": ["leonardo", "leonardo-ai", "cli", "image-generation", "ai", "agent"],
+  "keywords": [
+    "leonardo",
+    "leonardo-ai",
+    "cli",
+    "image-generation",
+    "ai",
+    "agent"
+  ],
   "author": "mrgoonie",
   "license": "MIT",
   "repository": {
