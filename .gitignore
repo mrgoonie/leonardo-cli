@@ -1,5 +1,7 @@
 node_modules/
 dist/
+output/
+outputs/
 .env
 .env.*
 !.env.example
