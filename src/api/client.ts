@@ -22,7 +22,12 @@ export class LeonardoClient {
   constructor(private readonly cfg: ResolvedConfig) {}
 
   async request<T = unknown>(path: string, opts: RequestOptions = {}): Promise<T> {
-    const url = new URL(this.cfg.baseUrl.replace(/\/$/, "") + path);
+    const base = this.cfg.baseUrl.replace(/\/$/, "");
+    // Routes prefixed with `v2:/` swap the v1 base for v2 (e.g. /api/rest/v2)
+    const v2Override = path.startsWith("v2:");
+    const finalBase = v2Override ? base.replace(/\/v1$/, "/v2") : base;
+    const finalPath = v2Override ? path.slice(3) : path;
+    const url = new URL(finalBase + finalPath);
     if (opts.query) {
       for (const [k, v] of Object.entries(opts.query)) {
         if (v !== undefined && v !== null) url.searchParams.set(k, String(v));

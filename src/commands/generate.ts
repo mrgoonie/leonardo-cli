@@ -33,6 +33,7 @@ export function registerGenerate(program: Command): void {
     .option("--seed <n>", "Seed", (v) => parseInt(v, 10))
     .option("--negative <text>", "Negative prompt")
     .option("--enhance", "Enhance prompt")
+    .option("--quality <level>", "GPT Image quality: LOW|MEDIUM|HIGH", "HIGH")
     .option("-o, --output <file>", "Output file (or directory)")
     .option("-d, --output-dir <dir>", "Output directory")
     .option("--no-download", "Skip downloading; print URLs only")
@@ -74,15 +75,37 @@ export function registerGenerate(program: Command): void {
       };
 
       log.info(`Submitting generation (${input.width}x${input.height}, n=${input.num_images})`);
-      let createRes: CreateGenerationResponse;
+      // GPT Image family uses the v2 endpoint with a different request shape.
+      const isGptImage = typeof input.modelId === "string" && input.modelId.startsWith("gpt-image-");
+      let generationId: string;
       try {
-        createRes = await client.post<CreateGenerationResponse>("/generations", input);
+        if (isGptImage) {
+          const v2Body = {
+            public: false,
+            model: input.modelId,
+            parameters: {
+              prompt: input.prompt,
+              quantity: input.num_images ?? 1,
+              width: input.width,
+              height: input.height,
+              quality: (options.quality as string | undefined) ?? "HIGH",
+              prompt_enhance: input.enhancePrompt ? "ON" : "OFF",
+              ...(input.seed !== undefined ? { seed: input.seed } : {}),
+            },
+          };
+          const v2Res = await client.post<{ generate: { generationId: string } }>(
+            "v2:/generations",
+            v2Body,
+          );
+          generationId = v2Res.generate.generationId;
+        } else {
+          const createRes = await client.post<CreateGenerationResponse>("/generations", input);
+          generationId = createRes.sdGenerationJob.generationId;
+        }
       } catch (err) {
         log.error(`Failed to start generation: ${(err as Error).message}`);
         process.exit(4);
       }
-
-      const generationId = createRes.sdGenerationJob.generationId;
       log.step(`generationId: ${generationId}`);
       log.info("Polling for completion...");
 

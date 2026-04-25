@@ -7,6 +7,21 @@ interface CreateVideoResp {
   motionVideoGenerationJob?: { generationId: string; apiCreditCost?: number };
 }
 
+// v2 video models — string ids dispatched to /api/rest/v2/generations.
+// v1 models (uppercase enums like MOTION2, VEO3, KLING2_1, Kling2_5) keep
+// using /generations-text-to-video. Cross-reference: leo video-models.
+const V2_VIDEO_MODELS = new Set([
+  "kling-2.6",
+  "kling-3.0",
+  "kling-video-o-1",
+  "kling-video-o-3",
+  "hailuo-2_3",
+  "ltxv-2.0-pro",
+  "ltxv-2.3-pro",
+  "seedance-2.0",
+  "seedance-2.0-fast",
+]);
+
 export function registerVideo(program: Command): void {
   program
     .command("video <prompt>")
@@ -30,16 +45,39 @@ export function registerVideo(program: Command): void {
       const client = new LeonardoClient(cfg);
 
       log.info(`Submitting text-to-video (${options.model})`);
-      const res = await client.post<CreateVideoResp>("/generations-text-to-video", {
-        prompt,
-        model: options.model,
-        resolution: options.resolution,
-        promptEnhance: !!options.enhance,
-        frameInterpolation: !!options.frameInterpolation,
-      });
-      const jobId = res.motionVideoGenerationJob?.generationId;
+      let jobId: string | undefined;
+      if (V2_VIDEO_MODELS.has(options.model)) {
+        // v2 endpoint: nested parameters object, RESOLUTION_* via `mode`
+        const w = options.resolution === "RESOLUTION_1080" ? 1920 : options.resolution === "RESOLUTION_480" ? 854 : 1280;
+        const h = options.resolution === "RESOLUTION_1080" ? 1080 : options.resolution === "RESOLUTION_480" ? 480 : 720;
+        const v2Res = await client.post<{ generate: { generationId: string } }>(
+          "v2:/generations",
+          {
+            public: false,
+            model: options.model,
+            parameters: {
+              prompt,
+              duration: 8,
+              mode: options.resolution,
+              prompt_enhance: options.enhance ? "ON" : "OFF",
+              width: w,
+              height: h,
+            },
+          },
+        );
+        jobId = v2Res.generate.generationId;
+      } else {
+        const res = await client.post<CreateVideoResp>("/generations-text-to-video", {
+          prompt,
+          model: options.model,
+          resolution: options.resolution,
+          promptEnhance: !!options.enhance,
+          frameInterpolation: !!options.frameInterpolation,
+        });
+        jobId = res.motionVideoGenerationJob?.generationId;
+      }
       emit(
-        { ok: true, generationId: jobId, raw: res },
+        { ok: true, generationId: jobId },
         () => {
           process.stdout.write(`${jobId ?? ""}\n`);
           process.stderr.write(`Poll with: leonardo status ${jobId}\n`);
