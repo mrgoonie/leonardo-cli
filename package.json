@@ -4,7 +4,8 @@
   "description": "Leonardo.Ai CLI — generate images, videos, and more from your terminal. AI-agent and human friendly.",
   "type": "module",
   "bin": {
-    "leonardo": "./dist/cli.js"
+    "leonardo": "./dist/cli.js",
+    "leo": "./dist/cli.js"
   },
   "main": "./dist/cli.js",
   "files": ["dist", "README.md", "LICENSE"],

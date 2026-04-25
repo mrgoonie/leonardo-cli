@@ -31,6 +31,11 @@ bun run leonardo --help
 bun run build && ./dist/cli.js --help
 ```
 
+After `npm i -g leonardo-cli` you get two binaries pointing to the same CLI:
+
+- `leonardo` — full name
+- `leo` — short alias
+
 ## API Key
 
 Get a key at <https://app.leonardo.ai/api-access>.
