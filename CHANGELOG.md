@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.0](https://github.com/mrgoonie/leonardo-cli/compare/v1.0.0...v1.1.0) (2026-04-25)
+
+
+### Features
+
+* add hero banner generated with gpt-image-2 ([ff4b5fe](https://github.com/mrgoonie/leonardo-cli/commit/ff4b5fe5b57726d02f1bc27fcfc7906b87379fc4))
+* add v2 endpoint support for GPT Image and modern video models ([e22972c](https://github.com/mrgoonie/leonardo-cli/commit/e22972c096842f135fc0f171f1107bd920f7a4cf))
+
 ## 1.0.0 (2026-04-25)
 
 
