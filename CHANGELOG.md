@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/mrgoonie/leonardo-cli/compare/v1.1.0...v1.1.1) (2026-04-25)
+
+
+### Bug Fixes
+
+* **cli:** read version from package.json instead of hardcoded literal ([529a814](https://github.com/mrgoonie/leonardo-cli/commit/529a814442ee6cbdd091263af1ab7c2226b8b0e5))
+
 ## [1.1.0](https://github.com/mrgoonie/leonardo-cli/compare/v1.0.0...v1.1.0) (2026-04-25)
 
 
