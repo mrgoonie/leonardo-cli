@@ -34,29 +34,64 @@ In `package.json`:
 - `repository.url` points to the public repo.
 - `prepublishOnly` runs the build so published artifact is fresh.
 
-## Release Procedure
+## Release Procedure (Automated — release-please)
 
-### Cutting a release
+We use [release-please](https://github.com/googleapis/release-please) for fully automated, conventional-commit-driven releases. **No manual version bumping.**
 
-```bash
-# 1. Bump version (patches semver and creates a v<x.y.z> commit + tag)
-npm version patch     # or `minor`, `major`
+### Day-to-day
 
-# 2. Push the tag (triggers CI release workflow)
-git push origin main --follow-tags
+Just commit with [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: add image-to-image support      → minor bump
+fix: handle empty prompt edge case    → patch bump
+feat!: drop Node 18 support           → major bump (or "BREAKING CHANGE:" footer)
+docs: improve README                  → patch bump (visible in changelog)
+chore: bump deps                      → no bump (hidden)
 ```
 
-That's it. CI takes over from here.
+### Release flow
 
-### What CI does (`.github/workflows/release.yml`)
+```
+push to main with conventional commits
+        │
+        ▼
+release-please opens/updates a "Release PR"
+  – bumps package.json + manifest
+  – regenerates CHANGELOG.md
+        │
+   merge that PR
+        │
+        ▼
+release-please tags v<x.y.z> + creates GitHub Release
+        │
+        ▼
+publish job runs:
+  – build dist/cli.js
+  – npm publish --provenance (NPM_TOKEN)
+  – upload dist/cli.js to the release
+```
 
-On any tag matching `v*.*.*`:
+### Workflows
 
-1. `bun install --frozen-lockfile`
-2. `bun run typecheck`
-3. `bun run build` → produces `dist/cli.js`
-4. `npm publish --access public` (uses `NPM_TOKEN`)
-5. `gh release create $TAG --generate-notes` with `dist/cli.js` attached
+- `.github/workflows/release-please.yml` — release-please action + npm publish job
+- `.github/workflows/ci.yml` — typecheck + build on every push/PR
+
+### Config
+
+- `release-please-config.json` — sections, tag format (`v${version}`)
+- `.release-please-manifest.json` — current version, updated by the action
+
+### Manual fallback
+
+If release-please breaks, you can still cut a release by hand:
+
+```bash
+npm version patch
+git push origin main --follow-tags
+gh release create v$(node -p "require('./package.json').version") --generate-notes
+# then manually trigger npm publish from your machine if needed
+```
 
 ### Continuous Integration (`.github/workflows/ci.yml`)
 
