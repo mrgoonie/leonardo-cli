@@ -88,4 +88,5 @@ For GitHub Release: `gh release delete v<bad> --yes`.
 ## Operational Notes
 
 - The published artifact (`dist/cli.js`) is the bundled, minified JS. Source under `src/` is **not** published (controlled by `files` in `package.json`).
-- The shebang `#!/usr/bin/env bun` in `cli.ts` is fine — Bun build keeps it. End-users run via Node, but Bun's bundler outputs Node-compatible JS, so the shebang resolves to whichever runtime is on `PATH`. If users hit "bun not found", switch the shebang in the bundled output to `#!/usr/bin/env node`. (Add a small post-build sed if it becomes a real issue.)
+- Source shebang is `#!/usr/bin/env node` so end-users without Bun can `npm i -g leonardo-cli` and run `leonardo` directly. Bun build emits Node-compatible JS (no Bun-only APIs used).
+- Maintainers running from source still use `bun src/cli.ts ...` regardless of the shebang.

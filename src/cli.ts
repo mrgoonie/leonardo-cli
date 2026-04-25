@@ -1,4 +1,4 @@
-#!/usr/bin/env bun
+#!/usr/bin/env node
 import { Command } from "commander";
 import { registerGenerate } from "./commands/generate.ts";
 import { registerStatus } from "./commands/status.ts";
