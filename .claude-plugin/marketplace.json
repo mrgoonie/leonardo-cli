@@ -1,0 +1,23 @@
+{
+  "name": "leonardo-marketplace",
+  "owner": { "name": "mrgoonie", "email": "digitop.vn@gmail.com" },
+  "metadata": {
+    "description": "Leonardo.Ai plugin for Claude Code — generate images, videos, upscales via the leonardo CLI.",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "leonardo",
+      "source": "./plugins/leonardo",
+      "description": "Generate images and videos with Leonardo.Ai. Wraps the leonardo CLI and ships guides for every model family (Lucid, Phoenix, Flux, Motion 2, Veo 3, Kling, Hailuo, LTX, Seedance).",
+      "version": "0.1.0",
+      "author": { "name": "mrgoonie", "email": "digitop.vn@gmail.com" },
+      "homepage": "https://github.com/mrgoonie/leonardo-cli",
+      "repository": "https://github.com/mrgoonie/leonardo-cli",
+      "license": "MIT",
+      "keywords": ["leonardo", "image-generation", "video-generation", "ai", "veo", "kling", "motion", "cli"],
+      "category": "media",
+      "tags": ["leonardo-ai", "text-to-image", "text-to-video", "media"]
+    }
+  ]
+}

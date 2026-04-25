@@ -14,6 +14,7 @@ src/
 │   ├── upscale.ts          # universal upscaler + variation fetch
 │   ├── status.ts           # generation lookup
 │   ├── models.ts           # /platformModels listing
+│   ├── video-models.ts     # static enum list of video models
 │   ├── me.ts               # account info
 │   └── config.ts           # config get/set/path/show
 ├── config/
@@ -68,6 +69,14 @@ No unit tests yet. E2E verified manually against live API:
 - `generate` with 5 different models (Lucid Origin, Phoenix 1.0, Anime XL, Kino XL, 3D Animation)
 - `--json` output piped through `jq`
 - `.env` resolution
+
+## Claude Code Plugin
+
+Repo doubles as a Claude Code plugin marketplace:
+- `.claude-plugin/marketplace.json` — marketplace catalog
+- `plugins/leonardo/` — plugin with skill (SKILL.md + 4 references) and slash commands (`/leo-gen`, `/leo-video`)
+
+Install: `/plugin marketplace add mrgoonie/leonardo-cli` then `/plugin install leonardo@leonardo-marketplace`.
 
 ## Known Gaps
 

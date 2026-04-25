@@ -1,0 +1,10 @@
+{
+  "name": "leonardo",
+  "version": "0.1.0",
+  "description": "Generate images and videos with Leonardo.Ai through the leonardo CLI. Includes guides for all model families and recipe references.",
+  "author": { "name": "mrgoonie", "email": "digitop.vn@gmail.com" },
+  "homepage": "https://github.com/mrgoonie/leonardo-cli",
+  "repository": "https://github.com/mrgoonie/leonardo-cli",
+  "license": "MIT",
+  "keywords": ["leonardo", "image-generation", "video-generation", "ai"]
+}
