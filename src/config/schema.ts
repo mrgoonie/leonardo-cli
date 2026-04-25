@@ -24,4 +24,4 @@ export interface ResolvedConfig {
 export const DEFAULT_BASE_URL = "https://cloud.leonardo.ai/api/rest/v1";
 export const DEFAULT_OUTPUT_DIR = ".";
 // Lucid Origin — fast, broadly available default
-export const DEFAULT_MODEL_ID = "6b645e3a-d64f-4341-a6d8-7a3690fbf042";
+export const DEFAULT_MODEL_ID = "7b592283-e8a7-4c5a-9ba6-d18c31f258b9";
