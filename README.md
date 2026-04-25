@@ -1,5 +1,7 @@
 # leonardo-cli
 
+![leonardo-cli banner](./assets/banner.jpg)
+
 A Leonardo.Ai command-line interface for generating images, videos, upscales, and more.
 
 Designed to be both **AI-agent friendly** (`--json`, deterministic exit codes, stderr logs) and **human friendly** (colors, progress, helpful errors).
