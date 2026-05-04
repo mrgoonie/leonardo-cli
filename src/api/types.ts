@@ -30,6 +30,7 @@ export interface GenerationImage {
   url: string;
   nsfw?: boolean;
   likeCount?: number;
+  motionMP4URL?: string;
 }
 
 export interface Generation {
