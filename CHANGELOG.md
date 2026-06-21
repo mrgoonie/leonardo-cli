@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/mrgoonie/leonardo-cli/compare/v1.1.1...v1.2.0) (2026-05-04)
+
+
+### Features
+
+* **video:** add --wait, download, and thumbnail options ([#4](https://github.com/mrgoonie/leonardo-cli/issues/4)) ([ad47fe8](https://github.com/mrgoonie/leonardo-cli/commit/ad47fe81eea318f87354c3fc7bc65c4df17c6813))
+
 ## [1.1.1](https://github.com/mrgoonie/leonardo-cli/compare/v1.1.0...v1.1.1) (2026-04-25)
 
 
